@@ -13,6 +13,33 @@ namespace Continental
         private int index;
 
         /// <summary>
+        /// Returns the number of cards
+        /// </summary>
+        public int Count
+        {
+            get
+            {
+                return this.cards.Count;
+            }
+        }
+
+        public object SyncRoot
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public bool IsSynchronized
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        /// <summary>
         /// Empty constructor, creates an empty deck
         /// </summary>
         public DeckCards()
@@ -118,6 +145,11 @@ namespace Continental
         public IEnumerator GetEnumerator()
         {
             return this.cards.GetEnumerator();
+        }
+
+        public void CopyTo(Array array, int index)
+        {
+            throw new NotImplementedException();
         }
     }
 }
