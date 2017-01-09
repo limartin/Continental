@@ -1,10 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Continental;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Continental.Tests
 {
@@ -60,10 +55,10 @@ namespace Continental.Tests
         }
 
         /// <summary>
-        /// Create multiple decks
+        /// Create multiple decks with no jocker
         /// </summary>
         [TestMethod()]
-        public void DeckCardsMultipleDecks()
+        public void DeckCardsMultipleDecksNoJocker()
         {
             for (int index = 1; index < 10; index++)
             {
@@ -71,5 +66,47 @@ namespace Continental.Tests
                 Assert.AreEqual(testDeck.Count, 52*index, "Deck count should be {0}",52*index);
             }
         }
+
+        /// <summary>
+        /// Create multiple decks with jocker
+        /// </summary>
+        [TestMethod()]
+        public void DeckCardsMultipleDecksJocker()
+        {
+            for (int index = 1; index < 10; index++)
+            {
+                var testDeck = new DeckCards(index,true);
+                Assert.AreEqual(testDeck.Count, 54 * index, "Deck count should be {0}", 54 * index);
+            }
+        }
+
+        [TestMethod()]
+        public void ValidateEqualDecks()
+        {
+            var deck1 = new DeckCards(1);
+            var deck2 = new DeckCards(1);
+            for (int index = 0; index < 52;  index++)
+            {
+                var card1 = deck1.GetNext();
+                var card2 = deck2.GetNext();
+                Assert.IsTrue(card1 == card2, "decks are not equal");
+            }
+        }
+        [TestMethod()]
+        public void ValidateNonEqualDecks()
+        {
+            var deck1 = new DeckCards(1);
+            var deck2 = new DeckCards(1);
+            deck2.Shuffle();
+            for (int index = 0; index < 52; index++)
+            {
+                var card1 = deck1.GetNext();
+                var card2 = deck2.GetNext();
+
+                // bugbug: This won't be deterministic, need to fix
+                Assert.IsFalse(card1 == card2, "decks are equal");
+            }
+        }
+
     }
 }
