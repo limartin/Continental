@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Cards1
+namespace Continental
 {
     public class DeckCards : ICardDeck
     {
@@ -15,18 +12,35 @@ namespace Cards1
         private const int maxNumberJockersPerDeck = 2;
         private int index;
 
+        /// <summary>
+        /// Empty constructor, creates an empty deck
+        /// </summary>
         public DeckCards()
         {
             this.cards = new List<Card>();
             this.index = 0;
         }
+
+        /// <summary>
+        /// Constructor to "autogenerate" an ordered set of cards
+        /// </summary>
+        /// <param name="numberDecks">Specify how manu decks of cards can be created</param>
+        /// <param name="includeJockers">Flag to add jockers to the deck</param>
         public DeckCards(int numberDecks, bool includeJockers = false) : this()
         {
+            if (numberDecks < 1)
+            {
+                throw new InvalidOperationException("Need to specify a value > 0");
+            }
             this.numberDecks = numberDecks;
             this.includeJockers = includeJockers;
+            
             CreateDeck();
         }
 
+        /// <summary>
+        /// Fill the Deck of cards
+        /// </summary>
         private void CreateDeck()
         {
             for (int deck = 0; deck < this.numberDecks; deck++)
@@ -35,6 +49,7 @@ namespace Cards1
                 {
                     // skip the none suite (for jocker)
                     if ((suit == Card.CardSuit.None)) continue;
+
                     foreach (Card.CardValue value in Enum.GetValues(typeof(Card.CardValue)))
                     {
                         // skip the jocker, will add later
@@ -55,6 +70,9 @@ namespace Cards1
             }
         }
 
+        /// <summary>
+        /// Method to shuffle the current deck of cards
+        /// </summary>
         public void Shuffle()
         {
             index = 0;
@@ -71,18 +89,32 @@ namespace Cards1
             }
         }
 
+        /// <summary>
+        /// Retrieve the topmost card of the deck
+        /// </summary>
+        /// <returns>Topmost card, null if no cards left</returns>
         public Card GetNext()
         {
             if (index == this.cards.Count)
+            {
                 return null;
+            }
             return this.cards[this.index++];
         }
 
+        /// <summary>
+        /// Add a card to the deck
+        /// </summary>
+        /// <param name="aCard">Card to be added</param>
         public void AddCard(Card aCard)
         {
             this.cards.Add(aCard);
         }
 
+        /// <summary>
+        /// Enumerator required to fullfill the IEnumerable contract
+        /// </summary>
+        /// <returns>IEnumerator of the Intenal List</returns>
         public IEnumerator GetEnumerator()
         {
             return this.cards.GetEnumerator();
