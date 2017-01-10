@@ -1,4 +1,6 @@
-﻿namespace Continental
+﻿using System;
+
+namespace Continental
 {
     public class Card
     {
@@ -34,6 +36,14 @@
 
         public Card(CardValue value, CardSuit suit)
         {
+            if ((value == CardValue.Jocker)&&(suit!= CardSuit.None))
+            {
+                throw new InvalidOperationException("Invalid Jocker");
+            }
+            if ((suit == CardSuit.None) && (value != CardValue.Jocker))
+            {
+                throw new InvalidOperationException("Invalid Card");
+            }
             this.value = value;
             this.suit = suit;
         }

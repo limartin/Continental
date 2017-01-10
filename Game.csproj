@@ -7,8 +7,8 @@
     <ProjectGuid>{6FA3D079-580B-4231-A250-FC48BA63B534}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Cards1</RootNamespace>
-    <AssemblyName>Cards1</AssemblyName>
+    <RootNamespace>Continental</RootNamespace>
+    <AssemblyName>Continental</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -46,6 +46,7 @@
     <Compile Include="Card.cs" />
     <Compile Include="DeckCards.cs" />
     <Compile Include="ICardDeck.cs" />
+    <Compile Include="PlayerDeck.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

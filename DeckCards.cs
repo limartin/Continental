@@ -8,7 +8,7 @@ namespace Continental
     {
         private int numberDecks;
         private bool includeJockers;
-        private List<Card> cards;
+        protected List<Card> cards;
         private const int maxNumberJockersPerDeck = 2;
         private int index;
 

@@ -1,5 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Linq;
+using System.Collections;
 
 namespace Continental.Tests
 {
@@ -27,7 +29,7 @@ namespace Continental.Tests
                 var NonEmptyDeck = new DeckCards(0);
                 Assert.Fail("Exception not thown");
             }
-            catch (InvalidOperationException e)
+            catch (InvalidOperationException)
             {
                 Assert.IsTrue(true);
             }
@@ -97,15 +99,21 @@ namespace Continental.Tests
         {
             var deck1 = new DeckCards(1);
             var deck2 = new DeckCards(1);
+           
             deck2.Shuffle();
+
             for (int index = 0; index < 52; index++)
             {
                 var card1 = deck1.GetNext();
                 var card2 = deck2.GetNext();
 
-                // bugbug: This won't be deterministic, need to fix
-                Assert.IsFalse(card1 == card2, "decks are equal");
+                if (card1 != card2)
+                {
+                    Assert.IsTrue(true);
+                    return;
+                }
             }
+            Assert.IsTrue(false,"Decks are the same");
         }
 
     }
