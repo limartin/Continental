@@ -55,5 +55,14 @@ namespace Continental.Tests
             play.AddCard(card4);
             Assert.AreEqual(play.Points(), 45, "Deck should be 45");
         }
+
+        [TestMethod()]
+        public void JockerPoint()
+        {
+            PlayerDeck play = new PlayerDeck();
+            Card card1 = new Card(Card.CardValue.Jocker, Card.CardSuit.None);
+            play.AddCard(card1);
+            Assert.AreEqual(play.Points(), 20, "Deck should be 20");
+        }
     }
 }
