@@ -151,5 +151,35 @@ namespace Continental
         {
             throw new NotImplementedException();
         }
+
+        /// <summary>
+        /// Enumerator for type Card
+        /// </summary>
+        /// <returns>IEnumerator of type Card from the internal list</returns>
+        IEnumerator<Card> IEnumerable<Card>.GetEnumerator()
+        {
+            return this.cards.GetEnumerator();
+        }
+
+        /// <summary>
+        /// Internal list sort
+        /// </summary>
+        public void Sort()
+        {
+            this.cards.Sort();
+        }
+
+        /// <summary>
+        /// indexer to access the card by index
+        /// </summary>
+        /// <param name="index">of the card</param>
+        /// <returns>card</returns>
+        public Card this[int index]
+        {
+            get
+            {
+                return this.cards[index];
+            }
+        }
     }
 }
