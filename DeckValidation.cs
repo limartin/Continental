@@ -40,7 +40,7 @@ namespace Continental
             }
 
             int deckSize = subdeck.Count;
-            // minimum number of cards is 3
+            // minimum number of cards is 4
             if (deckSize < 4)
             {
                 return false;
@@ -61,18 +61,36 @@ namespace Continental
             // treat as deck of cards so we can access de indexer
             var asDeckCard = subdeck as DeckCards;
 
+            // crate a link list so we can verify the values
+            // need to find a better way, that we don't generate
+            // the l.l every time we evaluate a run
+            LinkedList<Card.CardValue> linkedListValues = new LinkedList<Card.CardValue>();
+            foreach (Card.CardValue value in Enum.GetValues(typeof(Card.CardValue)))
+            {
+                if (value != Card.CardValue.Jocker)
+                {
+                    linkedListValues.AddLast(value);
+                }                
+            }
+
+
             // ensure the values are consecutive
             first = asDeckCard.First();
+            // get the next index
+            var indexInList = linkedListValues.Find(first.Value).Next;
+            if (first.Value == Card.CardValue.Ace)
+            {
+                // point to the next index, in this case a two
+                indexInList = linkedListValues.Find(Card.CardValue.Two);
+            }
+
             for (var index = 1; index < deckSize ; index++)
             {
-                var next = asDeckCard[index];
-                var foo = (next.Value) - 1;
-                if (first.Value != foo)
+                if (asDeckCard[index].Value != indexInList.Value)
                 {
-
                     return false;
                 }
-                first = next;
+                indexInList = indexInList.Next;
             }
             return true;
         }

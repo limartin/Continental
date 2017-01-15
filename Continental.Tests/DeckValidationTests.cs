@@ -83,9 +83,10 @@ namespace Continental.Tests
             }
         }
         [TestMethod()]
-        public void IsRunTest()
+        public void IsRunTestValid()
         {
             {
+                // 2 - 4
                 DeckCards validRun = new DeckCards();
                 validRun.AddCard(new Card(Card.CardValue.Two, Card.CardSuit.Heart));
                 validRun.AddCard(new Card(Card.CardValue.Three, Card.CardSuit.Heart));
@@ -94,12 +95,92 @@ namespace Continental.Tests
                 Assert.IsTrue(DeckValidation.IsRun(validRun));
             }
             {
+                // unsorted desk 2-4
                 DeckCards validRun = new DeckCards();
+                validRun.AddCard(new Card(Card.CardValue.Five, Card.CardSuit.Heart));
                 validRun.AddCard(new Card(Card.CardValue.Two, Card.CardSuit.Heart));
                 validRun.AddCard(new Card(Card.CardValue.Four, Card.CardSuit.Heart));
-                validRun.AddCard(new Card(Card.CardValue.Jack, Card.CardSuit.Heart));
-                validRun.AddCard(new Card(Card.CardValue.Eight, Card.CardSuit.Heart));
+                validRun.AddCard(new Card(Card.CardValue.Three, Card.CardSuit.Heart));
                 Assert.IsTrue(DeckValidation.IsRun(validRun));
+            }
+            {
+                // 4 - 7
+                DeckCards validRun = new DeckCards();
+                validRun.AddCard(new Card(Card.CardValue.Four, Card.CardSuit.Diamond));
+                validRun.AddCard(new Card(Card.CardValue.Five, Card.CardSuit.Diamond));
+                validRun.AddCard(new Card(Card.CardValue.Six, Card.CardSuit.Diamond));
+                validRun.AddCard(new Card(Card.CardValue.Seven, Card.CardSuit.Diamond));
+                Assert.IsTrue(DeckValidation.IsRun(validRun));
+            }
+            {
+                // Ace as a high card
+                DeckCards validRun = new DeckCards();
+                validRun.AddCard(new Card(Card.CardValue.Jack, Card.CardSuit.Spade));
+                validRun.AddCard(new Card(Card.CardValue.Queen, Card.CardSuit.Spade));
+                validRun.AddCard(new Card(Card.CardValue.King, Card.CardSuit.Spade));
+                validRun.AddCard(new Card(Card.CardValue.Ace, Card.CardSuit.Spade));
+                Assert.IsTrue(DeckValidation.IsRun(validRun));
+            }
+            {
+                // 10 - K
+                DeckCards validRun = new DeckCards();
+                validRun.AddCard(new Card(Card.CardValue.Ten, Card.CardSuit.Spade));
+                validRun.AddCard(new Card(Card.CardValue.Jack, Card.CardSuit.Spade));
+                validRun.AddCard(new Card(Card.CardValue.Queen, Card.CardSuit.Spade));
+                validRun.AddCard(new Card(Card.CardValue.King, Card.CardSuit.Spade));
+                Assert.IsTrue(DeckValidation.IsRun(validRun));
+            }
+
+            {
+                // more than 4 cards
+                DeckCards validRun = new DeckCards();
+                validRun.AddCard(new Card(Card.CardValue.Eight, Card.CardSuit.Spade));
+                validRun.AddCard(new Card(Card.CardValue.Nine, Card.CardSuit.Spade));
+                validRun.AddCard(new Card(Card.CardValue.Ten, Card.CardSuit.Spade));
+                validRun.AddCard(new Card(Card.CardValue.Jack, Card.CardSuit.Spade));
+                validRun.AddCard(new Card(Card.CardValue.Queen, Card.CardSuit.Spade));
+                validRun.AddCard(new Card(Card.CardValue.King, Card.CardSuit.Spade));
+                Assert.IsTrue(DeckValidation.IsRun(validRun));
+            }
+        }
+
+        [TestMethod()]
+        public void IsRunAceLowCard()
+        {
+            {
+                // Ace as a low card
+                DeckCards validRun = new DeckCards();
+                validRun.AddCard(new Card(Card.CardValue.Ace, Card.CardSuit.Spade));
+                validRun.AddCard(new Card(Card.CardValue.Two, Card.CardSuit.Spade));
+                validRun.AddCard(new Card(Card.CardValue.Three, Card.CardSuit.Spade));
+                validRun.AddCard(new Card(Card.CardValue.Four, Card.CardSuit.Spade));
+                Assert.IsTrue(DeckValidation.IsRun(validRun));
+            }
+        }
+
+        [TestMethod()]
+        public void IsRunTestInvalid()
+        {
+            {
+                // consecutive, different suit
+                DeckCards invalidRun = new DeckCards();
+                invalidRun.AddCard(new Card(Card.CardValue.Two, Card.CardSuit.Heart));
+                invalidRun.AddCard(new Card(Card.CardValue.Three, Card.CardSuit.Club));
+                invalidRun.AddCard(new Card(Card.CardValue.Five, Card.CardSuit.Heart));
+                invalidRun.AddCard(new Card(Card.CardValue.Four, Card.CardSuit.Heart));
+                Assert.IsFalse(DeckValidation.IsRun(invalidRun));
+            }
+            {
+                // not consecutive
+                DeckCards invalidRun = new DeckCards();
+                invalidRun.AddCard(new Card(Card.CardValue.Two, Card.CardSuit.Heart));
+                invalidRun.AddCard(new Card(Card.CardValue.Four, Card.CardSuit.Heart));
+                invalidRun.AddCard(new Card(Card.CardValue.Jack, Card.CardSuit.Heart));
+                invalidRun.AddCard(new Card(Card.CardValue.Eight, Card.CardSuit.Heart));
+                Assert.IsFalse(DeckValidation.IsRun(invalidRun));
+            }
+            {
+                // short run
             }
         }
     }
