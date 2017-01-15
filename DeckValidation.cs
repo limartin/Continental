@@ -73,16 +73,27 @@ namespace Continental
                 }                
             }
 
+            // if Ace is a low card, then we need to change the logic, 
+            // after sorting we need to verify that the last 2 cards
+            // if a[n-1] = Ace and a[n-2] != King, then we can assume Ace == 1
+            if ( (asDeckCard[deckSize - 1].Value == Card.CardValue.Ace ) && 
+                 (asDeckCard[deckSize - 2].Value != Card.CardValue.King) ) 
+            {
+                // ace == 1
 
-            // ensure the values are consecutive
+                // skip the compare of the last card, since we assume is the ACE 
+                // which should be taken as lowest value
+                deckSize--;
+            }
+            else
+            {
+                // ace == 14
+            }
+
             first = asDeckCard.First();
+            // ensure the values are consecutive
             // get the next index
             var indexInList = linkedListValues.Find(first.Value).Next;
-            if (first.Value == Card.CardValue.Ace)
-            {
-                // point to the next index, in this case a two
-                indexInList = linkedListValues.Find(Card.CardValue.Two);
-            }
 
             for (var index = 1; index < deckSize ; index++)
             {
