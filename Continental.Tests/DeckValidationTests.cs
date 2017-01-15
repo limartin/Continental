@@ -71,7 +71,7 @@ namespace Continental.Tests
         }
 
         [TestMethod]
-        public void IsRunParameter()
+        public void IsRunNull()
         {
             try
             {
@@ -130,7 +130,6 @@ namespace Continental.Tests
                 validRun.AddCard(new Card(Card.CardValue.King, Card.CardSuit.Spade));
                 Assert.IsTrue(DeckValidation.IsRun(validRun));
             }
-
             {
                 // more than 4 cards
                 DeckCards validRun = new DeckCards();
@@ -159,6 +158,21 @@ namespace Continental.Tests
         }
 
         [TestMethod()]
+        public void IsRunAceLowCardInvalid()
+        {
+            {
+                // Ace as a low card
+                DeckCards invalidRun = new DeckCards();
+                invalidRun.AddCard(new Card(Card.CardValue.King, Card.CardSuit.Spade));
+                invalidRun.AddCard(new Card(Card.CardValue.Ace, Card.CardSuit.Spade));
+                invalidRun.AddCard(new Card(Card.CardValue.Two, Card.CardSuit.Spade));
+                invalidRun.AddCard(new Card(Card.CardValue.Three, Card.CardSuit.Spade));
+                invalidRun.AddCard(new Card(Card.CardValue.Four, Card.CardSuit.Spade));
+                Assert.IsFalse(DeckValidation.IsRun(invalidRun));
+            }
+        }
+
+        [TestMethod()]
         public void IsRunTestInvalid()
         {
             {
@@ -181,6 +195,11 @@ namespace Continental.Tests
             }
             {
                 // short run
+                DeckCards invalidRun = new DeckCards();
+                invalidRun.AddCard(new Card(Card.CardValue.King, Card.CardSuit.Spade));
+                invalidRun.AddCard(new Card(Card.CardValue.Ace, Card.CardSuit.Spade));
+                invalidRun.AddCard(new Card(Card.CardValue.Two, Card.CardSuit.Spade));
+                Assert.IsFalse(DeckValidation.IsRun(invalidRun));
             }
         }
     }
