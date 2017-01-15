@@ -8,6 +8,25 @@ namespace Continental
 {
     public class PlayerDeck : DeckCards
     {
+        private string player;
+
+        public PlayerDeck(string player)
+        {
+            if (string.IsNullOrEmpty(player))
+            {
+                throw new InvalidProgramException("Player name shouln't be empty");
+            }
+            this.player = player;
+        }
+
+        public string Player
+        {
+            get
+            {
+                return this.player;
+            }
+        }
+
         public int Points()
         {
             int value = 0;

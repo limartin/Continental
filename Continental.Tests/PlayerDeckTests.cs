@@ -14,13 +14,13 @@ namespace Continental.Tests
         [TestMethod()]
         public void PointsTestEmptyDeck()
         {
-            PlayerDeck play = new PlayerDeck();
+            PlayerDeck play = new PlayerDeck("player");
             Assert.AreEqual(play.Points(), 0, "Emtpy deck should be 0");
         }
         [TestMethod()]
         public void PointsTestSingleCard()
         {
-            PlayerDeck play = new PlayerDeck();
+            PlayerDeck play = new PlayerDeck("player");
             Card card = new Card(Card.CardValue.Two, Card.CardSuit.Heart);
             play.AddCard(card);
             Assert.AreEqual(play.Points(), 2, "Deck should be 2");
@@ -29,7 +29,7 @@ namespace Continental.Tests
         [TestMethod()]
         public void PointsTestMultipleCard()
         {
-            PlayerDeck play = new PlayerDeck();
+            PlayerDeck play = new PlayerDeck("player");
             Card card1 = new Card(Card.CardValue.Two, Card.CardSuit.Heart);
             Card card2 = new Card(Card.CardValue.Three, Card.CardSuit.Diamond);
             Card card3 = new Card(Card.CardValue.Four, Card.CardSuit.Club);
@@ -44,7 +44,7 @@ namespace Continental.Tests
         [TestMethod()]
         public void PointsTestMultipleCardFigures()
         {
-            PlayerDeck play = new PlayerDeck();
+            PlayerDeck play = new PlayerDeck("player");
             Card card1 = new Card(Card.CardValue.Jack, Card.CardSuit.Heart);
             Card card2 = new Card(Card.CardValue.Queen, Card.CardSuit.Diamond);
             Card card3 = new Card(Card.CardValue.King, Card.CardSuit.Club);
@@ -59,7 +59,7 @@ namespace Continental.Tests
         [TestMethod()]
         public void JockerPoint()
         {
-            PlayerDeck play = new PlayerDeck();
+            PlayerDeck play = new PlayerDeck("player");
             Card card1 = new Card(Card.CardValue.Jocker, Card.CardSuit.None);
             play.AddCard(card1);
             Assert.AreEqual(play.Points(), 20, "Deck should be 20");
