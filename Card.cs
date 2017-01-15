@@ -136,7 +136,7 @@ namespace Continental
             }
             else
             {
-                return this.Value.Equals(other.Value);
+                return (this.Value.Equals(other.Value)  && this.Suit.Equals(other.Suit));
             }
         }
     }
