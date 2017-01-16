@@ -48,6 +48,7 @@
     <Compile Include="DeckCards.cs" />
     <Compile Include="Engine.cs" />
     <Compile Include="ICardDeck.cs" />
+    <Compile Include="IEngine.cs" />
     <Compile Include="PlayerDeck.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

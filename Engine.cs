@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Continental
 {
-    public class Engine
+    public class Engine : IEngine
     {
         public enum Rounds
         {
@@ -27,7 +27,7 @@ namespace Continental
             // 3 tercias y una corrida - 13
             ThreeThreeOneRun = 7,
             // 2 tercias y dos corridas - 14
-            TwoThreeTwoRuns  = 8,
+            TwoThreeTwoRuns = 8,
             // 1 tercia y 3 corridas - 15
             OneThreeThreeRuns = 9,
             // 4 corridas - 16
@@ -47,6 +47,10 @@ namespace Continental
         private Rounds currentRound;
         private Stack<Card> discardPile;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="playerList">List with player names</param>
         public Engine(List<string> playerList)
         {
             if (playerList == null)
@@ -60,7 +64,7 @@ namespace Continental
 
             this.playerList = playerList;
             this.playersCards = new List<PlayerDeck>();
-            foreach(var player in playerList)
+            foreach (var player in playerList)
             {
                 this.playersCards.Add(new PlayerDeck(player));
             }
@@ -78,10 +82,10 @@ namespace Continental
         /// 4. finally add the top most to the discard pile
         /// </summary>
         /// <param name="round"></param>
-        public void Initialize(Rounds round)
+        public void Initialize(Object round)
         {
             // set the current round
-            this.currentRound = round;
+            this.currentRound = (Rounds)round;
 
             // create a deck of cards based on the round
             // by casting the current round to integer gives us the
@@ -112,6 +116,57 @@ namespace Continental
 
             // add the next card to the discard 
             this.discardPile.Push(this.playCards.GetNext());
+        }
+
+        /// <summary>
+        /// Accesor for a player deck based on index
+        /// </summary>
+        /// <param name="playerIndex">index of player</param>
+        /// <returns>Player decks</returns>
+        public PlayerDeck GetPlayerHand(int playerIndex)
+        {
+            return this.playersCards[playerIndex];
+        }
+
+        /// <summary>
+        /// Show the topmost card of the discard pile
+        /// </summary>
+        /// <returns>topmost card</returns>
+        public Card ShowTopDiscardCard()
+        {
+            return this.discardPile.Peek();
+        }
+
+        /// <summary>
+        /// Removes the topmost card from the discard pile
+        /// </summary>
+        /// <returns>topmost card, null if no other card avail</returns>
+        public Card GetTopDiscardCard()
+        {
+            Card returnCard;
+            try
+            {
+                returnCard = this.discardPile.Pop();
+            }
+            catch (InvalidOperationException)
+            {
+                // caught the exception when the dicard pile is null
+                returnCard = null;
+            }
+            return returnCard;
+        }
+
+        /// <summary>
+        /// Adds a card to the top of the discard pile
+        /// </summary>
+        /// <param name="card">card to be added</param>
+        public void AddCardToDiscardPile(Card card)
+        {
+            if (card == null)
+            {
+                throw new InvalidProgramException("Null card");
+            }
+            this.discardPile.Push(card);
         }
     }
 }
